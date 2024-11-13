@@ -1,5 +1,21 @@
-body{
-    background-color: aqua;
+html body{
+    background-color:antiquewhite
+}
+header{
+    text-align: center;
+    text-decoration: none;
+    text-decoration: burlywood;
+}
+header a :hover{
+    text-decoration: solid bisque;
+
+}
+section{
+
+}
+
+nav{
+    
 }
 script{
     background-color: yellow;
