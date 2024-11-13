@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여행계획 및 관리</title>
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <header>
+        <a href="/index.html"><h2>여행 계획</h2></a>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/index.html">홈</a></li>
+            <li><a href="#">지도</a></li>
+            <li><a href="#">일정</a></li>
+            <li><a href="#">체크리스트</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <fieldset id="login-box">
+            <legend>로그인</legend>
+            <form action="/javascript/home.js" method="post">
+                <label for="id">ID:</label>
+                <input type="text" name="id" placeholder="ID" required><br>
+                <label for="password">비밀번호:</label>
+                <input type="password" name="password" placeholder="비밀번호" required><br>
+                <input type="submit" value="로그인">
+                <a href="/html/sign_up.html" id="sign_up">회원가입</a>
+            </form>
+        </fieldset>
+    </section>
+
+    <footer>
+        <p>2024.11.07</p>
+        <p id="x">8조 작품</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
