@@ -12,7 +12,7 @@ button.addEventListener('click', () => {
     // 사이드바가 열려 있는지 확인하고 버튼 텍스트 변경
     button.textContent = sidebar.classList.contains('open') 
         ? '사이드바 닫기' // 열려 있으면 '사이드바 닫기'로 텍스트 변경
-        : '사이드바 열기'; // 닫혀 있으면 '사이드바 열기'로 텍스트 변경
+        : '사이드바 '; // 닫혀 있으면 '사이드바 열기'로 텍스트 변경
 });
 
 // 'login-button' 클래스를 가진 버튼 요소를 선택
@@ -28,6 +28,6 @@ button1.addEventListener('click', () => {
     
     // 사이드바가 열려 있는지 확인하고 버튼 텍스트 변경
     button1.textContent = sidebar1.classList.contains('open')
-        ? '사이드바 닫기' // 열려 있으면 '사이드바 닫기'로 텍스트 변경
-        : '사이드바 열기'; // 닫혀 있으면 '사이드바 열기'로 텍스트 변경
+        ? '로그인 창 닫기' // 열려 있으면 '사이드바 닫기'로 텍스트 변경
+        : '로그인 창'; // 닫혀 있으면 '사이드바 열기'로 텍스트 변경
 });
