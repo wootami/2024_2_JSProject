@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8"> <!-- 문자 인코딩 설정 -->
+    <meta charset="UTF-8"> <!-- 문자 인코딩 설정: UTF-8 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 반응형 웹을 위한 뷰포트 설정 -->
     <title>여행 계획 짜는 홈페이지</title> <!-- 페이지 제목 -->
     <link type="text/css" rel="stylesheet" href="css/index.css"> <!-- 외부 CSS 링크 -->
@@ -14,14 +14,16 @@
     
     <nav>
         <button class="toggle-button">사이드바 열기</button> <!-- 사이드바 열기/닫기 버튼 -->
-        <button class="login-button">로그인</button> <!-- 사이드바 열기/닫기 버튼 -->
-        <div class="sidebar" id="loginsidebar">
+        <button class="login-button">로그인</button> <!-- 로그인 버튼 -->
+        
+        <div class="sidebar" id="loginsidebar"> <!-- 로그인 사이드바 -->
             <form>
-                <input type="text" name="id" value="아이디">
-                <input type="password" name="password" value="비밀번호">
+                <input type="text" name="id" value="아이디" placeholder="아이디 입력"> <!-- 아이디 입력 필드 -->
+                <input type="password" name="password" value="비밀번호" placeholder="비밀번호 입력"> <!-- 비밀번호 입력 필드 -->
             </form>
         </div>
-        <div class="sidebar" id="mySidebar"> <!-- 사이드바 컨테이너 -->
+
+        <div class="sidebar" id="mySidebar"> <!-- 일반 사이드바 컨테이너 -->
             <ul>
                 <li><a href="/2024_2_JSProject/index.html">홈</a></li> <!-- 홈 링크 -->
                 <li><a href="#">여행 일정</a></li> <!-- 여행 일정 링크 -->
@@ -30,11 +32,13 @@
             </ul>
         </div>
     </nav> 
+
     <section>
         <h2>여행 정보</h2> <!-- 여행 정보 섹션 제목 -->
-        <p>여기에 여행 관련 정보를 입력하세요.</p> <!-- 여행 정보 설명 --><br>
+        <p>여기에 여행 관련 정보를 입력하세요.</p> <!-- 여행 정보에 대한 설명 -->
+        <br>
         <h2>계획 세우기</h2> <!-- 계획 세우기 섹션 제목 -->
-        <p>여기에 여행 계획을 작성하세요.</p> <!-- 계획 작성 설명 -->
+        <p>여기에 여행 계획을 작성하세요.</p> <!-- 여행 계획 작성에 대한 설명 -->
     </section>
     
     <footer>
