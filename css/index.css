@@ -14,13 +14,19 @@ header {
     text-decoration: none;
 }
 
+form{
+    display: block;
+    text-align: center;
+    padding-top: 20%;
+}
 /* 사이드바 스타일 */
 .sidebar {
+
     width: 300px; /* 사이드바 너비 */
     height: 100%; /* 사이드바 높이를 전체로 설정 */
     position: fixed; /* 고정 위치 설정 */
     left: -350px; /* 화면 왼쪽으로 숨김, 초기 상태 */
-    background-color: blanchedalmond; /* 사이드바 배경색 */
+    background-color: wheat; /* 사이드바 배경색 */
     transition: left 0.3s ease; /* 부드러운 애니메이션 효과 */
     padding: 20px; /* 내부 여백 추가 */
     z-index: 1000; /* 다른 요소 위에 나타나도록 설정 */
@@ -90,6 +96,7 @@ header {
     transform: translateY(-2px); /* 마우스 오버 시 약간 위로 이동 */
 }
 
+
 /* 헤더 제목 스타일 */
 header h1 {
     color: teal; /* 제목 색상 */
@@ -100,7 +107,7 @@ header h1 {
 
 /* 내비게이션 스타일 */
 nav {
-    background-color: aquamarine; /* 내비게이션 배경색 */
+    background-color: white; /* 내비게이션 배경색 */
     padding: 10px 0; /* 패딩 추가 */
 }
 
@@ -133,6 +140,8 @@ aside {
 }
 
 section {
+    width: auto;
+    height: 500px;
     padding: 20px; /* 여백 추가 */
 }
 
