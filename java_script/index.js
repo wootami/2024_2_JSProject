@@ -43,3 +43,7 @@ button1.addEventListener('click', () => {
         button.textContent = '사이드바 열기'; // 사이드바 버튼 텍스트 초기화
     }
 });
+
+document.getElementById('signupButton').onclick = function(){
+    window.location.href = '/2024_2_JSProject/html/resign.html'
+}
