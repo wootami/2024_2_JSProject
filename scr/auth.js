@@ -5,11 +5,9 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "http
 export const register = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            // 회원가입 성공
             console.log('회원가입 성공:', userCredential.user);
         })
         .catch((error) => {
-            // 오류 처리
             console.error('회원가입 오류:', error.message);
         });
 };
@@ -18,11 +16,9 @@ export const register = (email, password) => {
 export const login = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            // 로그인 성공
             console.log('로그인 성공:', userCredential.user);
         })
         .catch((error) => {
-            // 오류 처리
             console.error('로그인 오류:', error.message);
         });
 };
