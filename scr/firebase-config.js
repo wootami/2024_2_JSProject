@@ -1,7 +1,5 @@
-// 필요한 SDK의 함수들을 가져옵니다.
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"; // Firebase 앱 초기화 함수
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js"; // Firebase Analytics 함수
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js'; // Firebase 인증 관련 함수
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js"; // Firestore 관련 함수
 
 // 웹 앱의 Firebase 구성
 const firebaseConfig = {
@@ -16,25 +14,28 @@ const firebaseConfig = {
 
 // Firebase 초기화
 const app = initializeApp(firebaseConfig); // Firebase 앱을 초기화합니다.
-const analytics = getAnalytics(app); // Firebase Analytics 기능을 초기화합니다.
-const auth = getAuth(app); // Firebase 인증 기능을 초기화합니다.
+const db = getFirestore(app); // Firestore 초기화
 
-// 구글 로그인 공급자 설정
-const provider = new GoogleAuthProvider(); // 구글 로그인을 위한 인증 공급자 초기화
-
-// 구글 로그인 함수
-export const loginGoogle = () => {
-  return signInWithPopup(auth, provider) // 구글 로그인을 팝업창으로 진행
-    .then((result) => {
-      const user = result.user; // 로그인 성공 시 사용자 정보
-      console.log("로그인 성공:", user);
-      // 추가적인 로그인 성공 처리 로직
-    })
-    .catch((error) => {
-      const errorCode = error.code; // 오류 코드
-      const errorMessage = error.message; // 오류 메시지
-      console.error("로그인 오류:", errorCode, errorMessage);
+// Firestore에 데이터 추가 함수
+export const addUserData = async (userData) => {
+  try {
+    // 'users' 컬렉션에 사용자 정보 추가
+    const docRef = await addDoc(collection(db, "users"), {
+      ...userData,
+      createdAt: new Date() // 생성일시 추가
     });
+    console.log("사용자 데이터 저장 성공:", docRef.id);
+  } catch (error) {
+    console.error("사용자 데이터 저장 오류:", error.message);
+  }
 };
 
-// 앱에서 Firebase 기능을 사용할 준비가 완료되었습니다.
+// 예시: 사용자 데이터 추가 호출
+const sampleUserData = {
+    uid: "sample-uid",
+    email: "sample@example.com",
+    displayName: "Sample User"
+};
+
+// Firestore에 샘플 사용자 데이터 추가
+addUserData(sampleUserData);
