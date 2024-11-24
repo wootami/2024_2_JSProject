@@ -20,6 +20,6 @@ const firebaseConfig = {
 
 // Firebase 초기화
 const app = initializeApp(firebaseConfig); // Firebase 앱을 초기화합니다.
-const analytics = getAnalytics(app); // Firebase Analytics 기능을 초기화합니다.
-
+const auth = getAnalytics(app); // Firebase Analytics 기능을 초기화합니다.
+const db =getFirestore(app)
 // 앱에서 Firebase 기능을 사용할 준비가 완료되었습니다.
