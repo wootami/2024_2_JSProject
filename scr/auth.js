@@ -1,45 +1,48 @@
 // src/auth.js
+// 사용자 인증 관련 함수 구현
+
 import { auth } from './firebase-config.js';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import firebase from 'firebase/app'; // Firebase 앱 모듈 가져오기
 
-// 구글 인증 공급자 설정
-const provider = new GoogleAuthProvider();
-
-// 회원가입 함수
-export const register = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            console.log('회원가입 성공:', userCredential.user);
-            return userCredential.user; // 사용자 정보 반환
-        })
-        .catch((error) => {
-            console.error('회원가입 오류:', error.message);
-            throw error; // 오류를 호출한 곳으로 전달
-        });
+/**
+ * 이메일과 비밀번호를 사용하여 사용자 회원가입
+ * @param {string} email - 사용자 이메일
+ * @param {string} password - 사용자 비밀번호
+ */
+export const signUp = async (email, password) => {
+    try {
+        await auth.createUserWithEmailAndPassword(email, password);
+        alert("회원가입에 성공했습니다!");
+    } catch (error) {
+        alert("회원가입 실패: " + error.message);
+    }
 };
 
-// 로그인 함수
-export const login = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            console.log('로그인 성공:', userCredential.user);
-            return userCredential.user; // 사용자 정보 반환
-        })
-        .catch((error) => {
-            console.error('로그인 오류:', error.message);
-            throw error; // 오류를 호출한 곳으로 전달
-        });
+/**
+ * 이메일과 비밀번호를 사용하여 사용자 로그인
+ * @param {string} email - 사용자 이메일
+ * @param {string} password - 사용자 비밀번호
+ */
+export const logIn = async (email, password) => {
+    try {
+        await auth.signInWithEmailAndPassword(email, password);
+        alert("로그인에 성공했습니다!");
+    } catch (error) {
+        alert("로그인 실패: " + error.message);
+    }
 };
 
-// 구글 로그인 함수
-export const loginGoogle = () => {
-    return signInWithPopup(auth, provider)
-        .then((result) => {
-            console.log('구글 로그인 성공:', result.user);
-            return result.user; // 사용자 정보 반환
-        })
-        .catch((error) => {
-            console.error('구글 로그인 오류:', error.message);
-            throw error; // 오류를 호출한 곳으로 전달
-        });
+// Google 인증 제공자 인스턴스 생성
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+/**
+ * Google 계정을 사용하여 사용자 로그인
+ */
+export const googleSignIn = async () => {
+    try {
+        await auth.signInWithPopup(googleProvider);
+        alert("구글 로그인이 성공했습니다!");
+    } catch (error) {
+        alert("구글 로그인 실패: " + error.message);
+    }
 };
