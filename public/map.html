@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지도</title>
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+    <header>
+        <h1>지도</h1>
+    </header>
+    <main>
+        <div id="map" style="height: 400px; width: 100%;"></div>
+        <input type="text" id="searchPlace" placeholder="장소 검색">
+        <button id="addPlace">장소 추가</button>
+        <ul id="placeList"></ul>
+    </main>
+    <footer>
+        <p>&copy; 2024 여행 계획 프로그램</p>
+    </footer>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+    <script src="./scripts/map.js"></script>
+</body>
+</html>
