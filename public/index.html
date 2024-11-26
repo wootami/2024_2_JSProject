@@ -1,0 +1,35 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <title>Firebase 인증</title>
+</head>
+<body>
+  <h1>Firebase 인증 시스템</h1>
+  
+  <div class="auth-container">
+    <div class="signup">
+      <h2>회원가입</h2>
+      <input type="email" id="signup-email" placeholder="이메일">
+      <input type="password" id="signup-password" placeholder="비밀번호">
+      <button id="signup-btn">회원가입</button>
+    </div>
+
+    <div class="login">
+      <h2>로그인</h2>
+      <input type="email" id="login-email" placeholder="이메일">
+      <input type="password" id="login-password" placeholder="비밀번호">
+      <button id="login-btn">로그인</button>
+    </div>
+
+    <div class="google-login">
+      <button id="google-login-btn">구글 계정으로 로그인</button>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
