@@ -1,14 +1,82 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../styles/styles.css">
-  <title>여행 계획 사이트</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여행 계획 프로그램</title>
+    <link rel="stylesheet" href="../styles/main.css">
 </head>
 <body>
+    <header>
+        <h1>여행 계획 프로그램</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">홈</a></li>
+                <li><a href="#login">로그인</a></li>
+                <li><a href="#plan">여행 계획</a></li>
+                <li><a href="#budget">예산 관리</a></li>
+                <li><a href="#checklist">체크리스트</a></li>
+                <li><a href="#weather">날씨 정보</a></li>
+            </ul>
+        </nav>
+    </header>
 
+    <main>
+        <section id="home" class="active">
+            <h2>환영합니다!</h2>
+            <p>여행 계획을 쉽게 만들고 관리하세요.</p>
+        </section>
 
-  <script type="module" src="../scr/app.js"></script>
+        <section id="login">
+            <h2>로그인</h2>
+            <form id="loginForm">
+                <input type="email" id="email" placeholder="이메일" required>
+                <input type="password" id="password" placeholder="비밀번호" required>
+                <button type="submit">로그인</button>
+            </form>
+        </section>
+
+        <section id="plan">
+            <h2>여행 계획</h2>
+            <div id="map" style="height: 400px; width: 100%;"></div>
+            <input type="text" id="searchPlace" placeholder="장소 검색">
+            <button id="addPlace">장소 추가</button>
+            <ul id="placeList"></ul>
+        </section>
+
+        <section id="budget">
+            <h2>예산 관리</h2>
+            <form id="budgetForm">
+                <input type="number" id="amount" placeholder="금액" required>
+                <input type="text" id="description" placeholder="설명" required>
+                <button type="submit">추가</button>
+            </form>
+            <ul id="expenseList"></ul>
+            <p>총 예산: <span id="totalBudget">0</span>원</p>
+        </section>
+
+        <section id="checklist">
+            <h2>체크리스트</h2>
+            <form id="checklistForm">
+                <input type="text" id="item" placeholder="준비물" required>
+                <button type="submit">추가</button>
+            </form>
+            <ul id="checklistItems"></ul>
+        </section>
+
+        <section id="weather">
+            <h2>날씨 정보</h2>
+            <input type="text" id="city" placeholder="도시 이름" required>
+            <button id="getWeather">날씨 확인</button>
+            <div id="weatherInfo"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 여행 계획 프로그램. All rights reserved.</p>
+    </footer>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+    <script src="../scripts/app.js"></script>
 </body>
 </html>
