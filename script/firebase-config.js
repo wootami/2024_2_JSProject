@@ -24,28 +24,47 @@ const provider = new GoogleAuthProvider();
 
 // 폼 이벤트 처리 함수
 const formHandler = (form, callback) => {
-  if (form) form.addEventListener('submit', e => { 
-    e.preventDefault(); 
-    callback(form['email'].value, form['password'].value); 
-  });
+  if (form) {
+    form.addEventListener('submit', e => { 
+      e.preventDefault(); 
+      const email = form['email'].value;
+      const password = form['password'].value;
+      if (email && password) {
+        callback(email, password);
+      } else {
+        console.error('이메일과 비밀번호를 모두 입력해주세요.');
+        alert('이메일과 비밀번호를 모두 입력해주세요.');
+      }
+    });
+  }
 };
 
 // 회원가입 로직
 formHandler(document.getElementById('signup-form'), (email, password) => {
   createUserWithEmailAndPassword(auth, email, password)
     .then(() => {
-      const userId = auth.currentUser.uid;
-      saveUserData(userId, email, "");
-      window.location.replace('dashboard.html');
+      const userId = auth.currentUser ? auth.currentUser.uid : null;
+      if (userId) {
+        saveUserData(userId, email, "");
+        window.location.replace('dashboard.html');
+      } else {
+        console.error('유저 정보가 없습니다.');
+      }
     })
-    .catch(err => console.error('회원가입 실패:', err.message));
+    .catch(err => {
+      console.error('회원가입 실패:', err.message);
+      alert('회원가입 실패: ' + err.message);
+    });
 });
 
 // 로그인 로직
 formHandler(document.getElementById('login-form'), (email, password) => {
   signInWithEmailAndPassword(auth, email, password)
     .then(() => window.location.replace('dashboard.html'))
-    .catch(err => console.error('로그인 실패:', err.message));
+    .catch(err => {
+      console.error('로그인 실패:', err.message);
+      alert('로그인 실패: ' + err.message);
+    });
 });
 
 // Google 로그인 로직
@@ -55,11 +74,18 @@ if (googleLoginButton) {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        const userId = user.uid;
-        saveUserData(userId, user.displayName, user.email);
-        window.location.replace('dashboard.html');
+        const userId = user ? user.uid : null;
+        if (userId) {
+          saveUserData(userId, user.displayName, user.email);
+          window.location.replace('dashboard.html');
+        } else {
+          console.error('유저 정보가 없습니다.');
+        }
       })
-      .catch(err => console.error('Google 로그인 실패:', err.message));
+      .catch(err => {
+        console.error('Google 로그인 실패:', err.message);
+        alert('Google 로그인 실패: ' + err.message);
+      });
   });
 }
 
@@ -67,16 +93,27 @@ if (googleLoginButton) {
 export const saveUserData = (userId, name, email) => {
   set(ref(database, 'users/' + userId), { username: name, email })
     .then(() => console.log('저장 성공'))
-    .catch(err => console.error('저장 실패:', err));
+    .catch(err => {
+      console.error('저장 실패:', err);
+      alert('데이터 저장 실패: ' + err.message);
+    });
 };
 
 // 데이터 불러오기 함수
 export const getUserData = (userId) => {
   get(child(ref(database), `users/${userId}`))
     .then(snapshot => {
-      snapshot.exists() ? console.log(snapshot.val()) : console.log("데이터 없음");
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+      } else {
+        console.log("데이터 없음");
+        alert("데이터가 없습니다.");
+      }
     })
-    .catch(err => console.error('불러오기 실패:', err));
+    .catch(err => {
+      console.error('불러오기 실패:', err);
+      alert('데이터 불러오기 실패: ' + err.message);
+    });
 };
 
 // 여행 예산 관리 함수 추가
@@ -87,14 +124,25 @@ export const saveBudgetData = (userId, tripId, totalBudget, expenses) => {
     expenses: expenses
   })
     .then(() => console.log('예산 저장 성공'))
-    .catch(err => console.error('예산 저장 실패:', err));
+    .catch(err => {
+      console.error('예산 저장 실패:', err);
+      alert('예산 데이터 저장 실패: ' + err.message);
+    });
 };
 
 // 예산 정보 가져오기 함수
 export const getBudgetData = (userId, tripId) => {
   get(child(ref(database), `budgets/${userId}/${tripId}`))
     .then(snapshot => {
-      snapshot.exists() ? console.log(snapshot.val()) : console.log("예산 데이터 없음");
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+      } else {
+        console.log("예산 데이터 없음");
+        alert("예산 데이터가 없습니다.");
+      }
     })
-    .catch(err => console.error('예산 정보 불러오기 실패:', err));
+    .catch(err => {
+      console.error('예산 정보 불러오기 실패:', err);
+      alert('예산 데이터 불러오기 실패: ' + err.message);
+    });
 };
