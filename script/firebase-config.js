@@ -1,6 +1,6 @@
 // firebase-app.js 파일 (Firebase 설정 및 회원가입/로그인, 데이터베이스 연동 모두 포함)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-auth.js";
 import { getDatabase, ref, set, get, child, push } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-database.js";
 
 // Firebase 설정 객체
@@ -18,6 +18,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app);
+
+// Google Auth Provider 초기화
+const provider = new GoogleAuthProvider();
 
 // 폼 이벤트 처리 함수
 const formHandler = (form, callback) => {
@@ -45,6 +48,21 @@ formHandler(document.getElementById('login-form'), (email, password) => {
     .catch(err => console.error('로그인 실패:', err.message));
 });
 
+// Google 로그인 로직
+const googleLoginButton = document.getElementById('google-login-button');
+if (googleLoginButton) {
+  googleLoginButton.addEventListener('click', () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        const userId = user.uid;
+        saveUserData(userId, user.displayName, user.email);
+        window.location.replace('dashboard.html');
+      })
+      .catch(err => console.error('Google 로그인 실패:', err.message));
+  });
+}
+
 // 데이터 저장 함수
 export const saveUserData = (userId, name, email) => {
   set(ref(database, 'users/' + userId), { username: name, email })
@@ -61,7 +79,7 @@ export const getUserData = (userId) => {
     .catch(err => console.error('불러오기 실패:', err));
 };
 
-// 여행 예산 관리 함수 
+// 여행 예산 관리 함수 추가
 export const saveBudgetData = (userId, tripId, totalBudget, expenses) => {
   const budgetRef = ref(database, `budgets/${userId}/${tripId}`);
   set(budgetRef, {
