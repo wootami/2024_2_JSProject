@@ -8,7 +8,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyBdTMSJuAXluGdrQk6aAxPTszRme0YbKfA",
   authDomain: "jsproject-e6692.firebaseapp.com",
   projectId: "jsproject-e6692",
-  storageBucket: "jsproject-e6692.firebasestorage.app",
+  storageBucket: "jsproject-e6692.appspot.com", // 오류 수정: storageBucket URL 오타 수정
   messagingSenderId: "847960636309",
   appId: "1:847960636309:web:06e0cdc6327acbcf66949c",
   measurementId: "G-DK3XLS078M"
