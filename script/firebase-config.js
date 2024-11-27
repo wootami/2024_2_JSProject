@@ -30,14 +30,14 @@ const formHandler = (form, callback) => {
 // 회원가입 로직
 formHandler(document.getElementById('signup-form'), (email, password) => {
   createUserWithEmailAndPassword(auth, email, password)
-    .then(() => window.location.href = 'dashboard.html')
+    .then(() => window.location.replace('dashboard.html'))
     .catch(err => console.error('회원가입 실패:', err.message));
 });
 
 // 로그인 로직
 formHandler(document.getElementById('login-form'), (email, password) => {
   signInWithEmailAndPassword(auth, email, password)
-    .then(() => window.location.href = 'dashboard.html')
+    .then(() => window.location.replace('dashboard.html'))
     .catch(err => console.error('로그인 실패:', err.message));
 });
 
