@@ -1,7 +1,7 @@
 // firebase-app.js 파일 (Firebase 설정 및 회원가입/로그인, 데이터베이스 연동 모두 포함)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-auth.js";
-import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-database.js";
+import { getDatabase, ref, set, get, child, push } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-database.js";
 
 // Firebase 설정 객체
 const firebaseConfig = {
@@ -30,7 +30,11 @@ const formHandler = (form, callback) => {
 // 회원가입 로직
 formHandler(document.getElementById('signup-form'), (email, password) => {
   createUserWithEmailAndPassword(auth, email, password)
-    .then(() => window.location.replace('dashboard.html'))
+    .then(() => {
+      const userId = auth.currentUser.uid;
+      saveUserData(userId, email, "");
+      window.location.replace('dashboard.html');
+    })
     .catch(err => console.error('회원가입 실패:', err.message));
 });
 
@@ -55,4 +59,24 @@ export const getUserData = (userId) => {
       snapshot.exists() ? console.log(snapshot.val()) : console.log("데이터 없음");
     })
     .catch(err => console.error('불러오기 실패:', err));
+};
+
+// 여행 예산 관리 함수 
+export const saveBudgetData = (userId, tripId, totalBudget, expenses) => {
+  const budgetRef = ref(database, `budgets/${userId}/${tripId}`);
+  set(budgetRef, {
+    total_budget: totalBudget,
+    expenses: expenses
+  })
+    .then(() => console.log('예산 저장 성공'))
+    .catch(err => console.error('예산 저장 실패:', err));
+};
+
+// 예산 정보 가져오기 함수
+export const getBudgetData = (userId, tripId) => {
+  get(child(ref(database), `budgets/${userId}/${tripId}`))
+    .then(snapshot => {
+      snapshot.exists() ? console.log(snapshot.val()) : console.log("예산 데이터 없음");
+    })
+    .catch(err => console.error('예산 정보 불러오기 실패:', err));
 };
