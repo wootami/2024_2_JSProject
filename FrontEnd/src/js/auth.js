@@ -5,7 +5,7 @@ import {
     signInWithEmailAndPassword,
     signInWithPopup,
     GoogleAuthProvider,
-} from "https://www.gstatic.com/firebasejs/9.x.x/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js";
 import { ref, set, get, child } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 
 // Google Auth Provider 초기화

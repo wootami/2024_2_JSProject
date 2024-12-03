@@ -1,6 +1,6 @@
 import { loginUser } from './auth.js';
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
 
     const navLinks = document.querySelectorAll('nav a');
     const sections = document.querySelectorAll('main section');
