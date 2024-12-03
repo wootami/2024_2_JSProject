@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Auth Demo</title>
+</head>
+<body>
+    <h1>Firebase 인증 데모</h1>
+    <form id="register-form">
+        <h2>회원가입</h2>
+        <input type="email" id="register-email" placeholder="이메일" required />
+        <input type="password" id="register-password" placeholder="비밀번호" required />
+        <button type="submit">회원가입</button>
+    </form>
+
+    <form id="login-form">
+        <h2>로그인</h2>
+        <input type="email" id="login-email" placeholder="이메일" required />
+        <input type="password" id="login-password" placeholder="비밀번호" required />
+        <button type="submit">로그인</button>
+    </form>
+
+    <button id="google-login">Google로 로그인</button>
+
+    <script type="module">
+        import { registerUser, loginUser, googleLogin } from './auth.js';
+
+        // 회원가입 이벤트
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            try {
+                await registerUser(email, password);
+                alert('회원가입 성공');
+            } catch (err) {
+                alert('회원가입 실패: ' + err.message);
+            }
+        });
+
+        // 로그인 이벤트
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            try {
+                await loginUser(email, password);
+                alert('로그인 성공');
+            } catch (err) {
+                alert('로그인 실패: ' + err.message);
+            }
+        });
+
+        // Google 로그인 이벤트
+        document.getElementById('google-login').addEventListener('click', async () => {
+            try {
+                await googleLogin();
+                alert('Google 로그인 성공');
+            } catch (err) {
+                alert('Google 로그인 실패: ' + err.message);
+            }
+        });
+    </script>
+</body>
+</html>
