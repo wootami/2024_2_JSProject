@@ -15,5 +15,9 @@ const firebaseConfig = {
 
 // Firebase 초기화
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app); // Firebase 인증 객체
-export const database = getDatabase(app); // Firebase 데이터베이스 객체
+
+// Firebase 인증 객체
+export const auth = getAuth(app); 
+
+// Firebase 데이터베이스 객체
+export const database = getDatabase(app); 
