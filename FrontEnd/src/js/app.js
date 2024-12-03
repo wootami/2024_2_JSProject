@@ -1,6 +1,6 @@
 import { loginUser } from './auth.js';
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
 
     // 네비게이션 기능
     const navLinks = document.querySelectorAll('nav a');
