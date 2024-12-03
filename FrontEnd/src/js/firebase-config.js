@@ -7,6 +7,7 @@ import { getDatabase } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-
 const firebaseConfig = {
   apiKey: "AIzaSyBdTMSJuAXluGdrQk6aAxPTszRme0YbKfA",
   authDomain: "jsproject-e6692.firebaseapp.com",
+  
   projectId: "jsproject-e6692",
   storageBucket: "jsproject-e6692.appspot.com", 
   appId: "1:847960636309:web:06e0cdc6327acbcf66949c",
