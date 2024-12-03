@@ -2,7 +2,6 @@ import { loginUser } from './auth.js';
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    // 네비게이션 기능
     const navLinks = document.querySelectorAll('nav a');
     const sections = document.querySelectorAll('main section');
 
@@ -10,14 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
-            console.log('Clicked link:', targetId); // 추가된 로그
+            console.log('Clicked link:', targetId); 
             sections.forEach(section => {
                 section.classList.remove('active');
-                console.log('Removed active from:', section.id); // 추가된 로그
+                console.log('Removed active from:', section.id); 
             });
             const targetSection = document.getElementById(targetId);
             targetSection.classList.add('active');
-            console.log('Added active to:', targetId); // 추가된 로그
+            console.log('Added active to:', targetId); 
         });
     });
 
