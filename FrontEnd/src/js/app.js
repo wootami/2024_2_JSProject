@@ -1,4 +1,7 @@
+import { loginUser } from './auth.js';
+
 document.addEventListener('DOMContentLoaded', function() {
+
     // 네비게이션 기능
     const navLinks = document.querySelectorAll('nav a');
     const sections = document.querySelectorAll('main section');
@@ -25,9 +28,29 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         console.log('로그인 시도:', email, password);
-        // 여기에 실제 로그인 로직을 구현해야 합니다.
-    });
+        
 
+    document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('loginForm');
+
+    // 로그인 폼 제출 이벤트 처리
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            await loginUser(email, password); 
+            alert('로그인 성공!');
+            window.location.href = 'index.html'; 
+        } catch (error) {
+            alert('로그인 실패: ' + error.message); 
+        }
+    });
+});
+
+    });
+    AIzaSyDpZO8RI3dGyimBugK9D5DG59jzUSTdbgM
     // Google Maps 초기화 (API 키가 필요합니다)
     let map;
     function initMap() {
