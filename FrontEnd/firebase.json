@@ -21,6 +21,10 @@
         "destination": "/map.html"
       },
       {
+        "source": "**/*.@(js|css|html|ico|png|jpg|svg|json)",
+        "destination": "/public/$1"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       },
@@ -29,11 +33,18 @@
         "destination": "/src/**"
       }
     ],
-    "cleanUrls": true,
-    "trailingSlash": false,
     "headers": [
       {
-        "source": "**/*.@(html|css|js)",
+        "source": "**/*.js",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/javascript"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(html|css)",
         "headers": [
           {
             "key": "Cache-Control",
@@ -41,6 +52,8 @@
           }
         ]
       }
-    ]
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false
   }
 }
