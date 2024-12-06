@@ -20,21 +20,30 @@
         "destination": "/map.html"
       },
       {
-        "source": "/domestic",
-        "destination": "/domestic.html"
-      },
-      {
-        "source": "/international",
-        "destination": "/international.html"
+        "source": "**/*.@(js|css|html|ico|png|jpg|svg|json)",
+        "destination": "/public/$1"
       },
       {
         "source": "**",
         "destination": "/index.html"
+      },
+      {
+        "source": "/src/**",
+        "destination": "/src/**"
       }
     ],
     "headers": [
       {
-        "source": "**/*.@(html|css|js|jpg|png|svg)",
+        "source": "**/*.js",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/javascript"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(html|css)",
         "headers": [
           {
             "key": "Cache-Control",

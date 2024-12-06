@@ -1,65 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>슬라이더랑</title>
-    <link rel="stylesheet" href="common.css">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="slider.css"> 
+    <title>여행 플래너</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <header>
-        <div class="auth-buttons">
-            <button onclick="location.href='login.html'">로그인</button>
-            <button onclick="location.href='signup.html'">회원가입</button>
+    <nav>
+        <div class="container">
+            <h1><a href="index.html">여행 플래너</a></h1>
+            <div>
+                <span id="user-info" style="display: none; color: white;"></span>
+                <button id="logout-btn" style="display: none;">로그아웃</button>
+                <div id="auth-buttons">
+                    <a href="login.html">로그인</a>
+                    <a href="signup.html">회원가입</a>
+                </div>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <div class="slider-container">
-        <div class="slider">
-            <div class="slide" style="background-image: url('./images/sea.jpg');"></div>
-            <div class="slide" style="background-image: url('./images/mountain.jpg');"></div>
-            <div class="slide" style="background-image: url('./images/desert.jpg');"></div>
-            <div class="slide" style="background-image: url('./images/forest.jpg');"></div>
+    <div class="main-content">
+        <h1>나만의 여행 계획</h1>
+        <p>쉽고 간단하게 여행 계획을 세워보세요</p>
+        
+        <div class="feature-buttons">
+            <a href="map.html" class="feature-btn">
+                지도 & 날씨
+            </a>
+            <a href="checklist.html" class="feature-btn">
+                체크리스트
+            </a>
         </div>
     </div>
 
-    <div class="container">
-        <h2>여행지를 선택하세요</h2>
-        <div class="options">
-            <div class="option">
-                <h3>국내 여행</h3>
-                <button onclick="location.href='domestic.html'">국내 여행</button>
-            </div>
-            <div class="option">
-                <h3>해외 여행</h3>
-                <button onclick="location.href='international.html'">해외 여행</button>
-            </div>
-        </div>
-        <div class="calendar-section">
-            <h3>여행 날짜를 선택하세요</h3>
-            <form>
-                <label for="departure-date">출발 날짜:</label>
-                <input type="date" id="departure-date" name="departure-date" required>
-
-                <label for="return-date">도착 날짜:</label>
-                <input type="date" id="return-date" name="return-date" required>
-            </form>
-        </div>
-    </div>
-
-    <script src="slider.js"></script> 
-    <script>
-        const departureDate = document.getElementById('departure-date');
-        const returnDate = document.getElementById('return-date');
-
-        const today = new Date().toISOString().split('T')[0];
-        departureDate.setAttribute('min', today);
-
-        departureDate.addEventListener('change', () => {
-            returnDate.setAttribute('min', departureDate.value);
-        });
+    <script type="module">
+        import { initAuthStateListener } from './js/auth.js';
+        document.addEventListener('DOMContentLoaded', initAuthStateListener);
     </script>
 </body>
 </html>
