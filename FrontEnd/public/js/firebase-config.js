@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //firebase 관련 firebase-config.js
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-app.js";
@@ -66,27 +65,3 @@ export const authStateListener = (callback) => {
     });
 };
 
-=======
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { getDatabase } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
-
-// Firebase 설정 객체
-const firebaseConfig = {
-  apiKey: "AIzaSyBdTMSJuAXluGdrQk6aAxPTszRme0YbKfA",
-  authDomain: "jsproject-e6692.firebaseapp.com",
-  projectId: "jsproject-e6692",
-  storageBucket: "jsproject-e6692.appspot.com",
-  appId: "1:847960636309:web:06e0cdc6327acbcf66949c",
-  measurementId: "G-DK3XLS078M"
-};
-
-// Firebase 초기화
-const app = initializeApp(firebaseConfig);
-
-// Firebase 인증 객체
-export const auth = getAuth(app);
-
-// Firebase 데이터베이스 객체
-export const database = getDatabase(app);
->>>>>>> 57734fa3aab2156f4a22d0d15fd430332a0f4e27
