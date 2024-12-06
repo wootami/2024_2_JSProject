@@ -2,88 +2,40 @@
 <html>
 <head>
     <title>지도 & 날씨 예보</title>
-    <style>
-       body {
-        margin: 10px;
-        padding: 0;
-        height: 100vh;
-        overflow: hidden;
-        }
-        #map {
-            height: 80vh;
-            width: 77%;
-            float: left;
-            border : 3px solid #698cb1;
-            border-radius : 30px;
-
-        }
-        #search-container {
-            height: 100vh;
-            width: 20%;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-        #weather-info {
-            margin-top: 20px;
-            padding: 15px;
-            background: #fff;
-            border-radius: 5px;
-        }
-        .forecast-day {
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        #place-input {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            margin-bottom: 15px;
-            border: 2px solid #007bff;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        #date-picker {
-            width: 100%;
-            padding: 10px;
-            font-size: 14px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="css/map.css">
 </head>
 <body>
-    <div id="map"></div>
-    <div id="search-container">
-        <input type="text" id="place-input" placeholder="장소를 검색하세요">
-        <input type="date" id="date-picker" min="">
-        <button onclick="searchPlace()">검색</button>
-        <div id="weather-info"></div>
+    <nav>
+        <div class="container">
+            <h1><a href="index.html">여행 플래너</a></h1>
+            <div>
+                <a href="login.html">로그인</a>
+                <a href="signup.html">회원가입</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div id="saved-places-container">
+            <h3>저장된 장소</h3>
+            <ul id="saved-places"></ul>
+        </div>
+        <div id="map"></div>
+        <div id="search-container">
+            <input type="text" id="place-input" placeholder="장소를 검색하세요">
+            <input type="date" id="date-picker" min="">
+            <button onclick="searchPlace()">검색</button>
+            <button onclick="addPlace()" class="add-btn">이 장소 추가</button>
+            <div id="weather-info"></div>
+        </div>
     </div>
     
 
-   <script>
+    <script> //지도 
         let map;
         let marker;
         const weatherApiKey = '16aad813955d45a4b5073622240312';
+        
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: 37.5665, lng: 126.9780 },
@@ -94,11 +46,10 @@
                 map: map
             });
 
-            // 날짜 선택기 초기화
             const datePicker = document.getElementById('date-picker');
             const today = new Date();
             const maxDate = new Date();
-            maxDate.setDate(today.getDate() + 14); // 14일 후까지 선택 가능
+            maxDate.setDate(today.getDate() + 14);
             
             datePicker.min = today.toISOString().split('T')[0];
             datePicker.max = maxDate.toISOString().split('T')[0];
@@ -115,7 +66,6 @@
                     const location = results[0].geometry.location;
                     map.setCenter(location);
                     marker.setPosition(location);
-                    
                     getForecast(location.lat(), location.lng(), selectedDate);
                 }
             });
@@ -127,7 +77,6 @@
                     `https://api.weatherapi.com/v1/forecast.json?key=${weatherApiKey}&q=${lat},${lon}&days=14&dt=${date}`
                 );
                 const data = await response.json();
-                
                 const forecast = data.forecast.forecastday.find(day => day.date === date);
                 
                 document.getElementById('weather-info').innerHTML = `
@@ -151,7 +100,7 @@
             return `
                 <div class="hourly-forecast">
                     ${hourlyData
-                        .filter((_, index) => index % 3 === 0) // 3시간 간격으로 표시
+                        .filter((_, index) => index % 3 === 0)
                         .map(hour => `
                             <div>
                                 <p>${hour.time.split(' ')[1]} - ${hour.temp_c}°C</p>
@@ -161,8 +110,91 @@
             `;
         }
     </script>
-    <script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBH-iJrPVrJXu0MW_qEw74wxxEPHikLhDs&callback=initMap">
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBH-iJrPVrJXu0MW_qEw74wxxEPHikLhDs&callback=initMap"></script>
+    
+    <script> //장소 추가 스크립트
+    let markers = []; // 마커들을 저장할 배열
+    let colorMap = new Map(); // 날짜별 색상을 저장할 Map
+    let colorIndex = 0; // 색상 인덱스
+    let savedPlacesList = []; // 저장된 장소들의 배열
+
+    function addPlace() {
+        const placeInput = document.getElementById('place-input');
+        const dateInput = document.getElementById('date-picker');
+        const weatherInfo = document.getElementById('weather-info');
+        
+        const place = placeInput.value;
+        const date = dateInput.value;
+        
+        if (place && weatherInfo.innerHTML) {
+            if (!colorMap.has(date)) {
+                colorMap.set(date, getNextColor(colorIndex++));
+            }
+            const markerColor = colorMap.get(date);
+            
+            const newMarker = new google.maps.Marker({
+                position: marker.getPosition(),
+                map: map,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: markerColor,
+                    fillOpacity: 0.8,
+                    strokeWeight: 2,
+                    scale: 10
+                }
+            });
+            
+            markers.push(newMarker);
+            
+            const maxTemp = weatherInfo.querySelector('.forecast-day p:nth-child(1)').textContent;
+            const minTemp = weatherInfo.querySelector('.forecast-day p:nth-child(2)').textContent;
+            
+            // 장소 정보 객체 생성
+            const placeInfo = {
+                name: place,
+                date: date,
+                color: markerColor,
+                maxTemp: maxTemp,
+                minTemp: minTemp,
+                location: {
+                    lat: marker.getPosition().lat(),
+                    lng: marker.getPosition().lng()
+                }
+            };
+            
+            // 로컬 배열에 추가
+            savedPlacesList.push(placeInfo);
+            
+            // 날짜순으로 정렬
+            savedPlacesList.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            // 리스트 업데이트
+            updatePlacesList();
+        }
+    }
+
+    function updatePlacesList() {
+        const savedPlaces = document.getElementById('saved-places');
+        savedPlaces.innerHTML = '';
+        
+        savedPlacesList.forEach(place => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <div style="border-left: 4px solid ${place.color}; padding-left: 10px;">
+                    <strong>${place.name}</strong><br>
+                    날짜: ${place.date}<br>
+                    ${place.maxTemp}<br>
+                    ${place.minTemp}
+                </div>
+            `;
+            savedPlaces.appendChild(li);
+        });
+    }
+
+    function getNextColor(index) {
+        const hue = (index * 137.5) % 360;
+        return `hsl(${hue}, 70%, 50%)`;
+    }
     </script>
 </body>
-</html>
+</html>s

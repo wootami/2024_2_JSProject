@@ -1,15 +1,6 @@
 // auth.js (인증 관련 로직)
 import { auth, database } from './firebase-config.js';
-<<<<<<< HEAD
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-auth.js";
-=======
-import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signInWithPopup,
-    GoogleAuthProvider,
-} from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js";
->>>>>>> 171f7e1 (수정)
 import { ref, set, get, child } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 
 // Google Auth Provider 초기화
