@@ -1,4 +1,4 @@
-import { loginUser } from './auth.js';
+import { loginUser, googleLogin } from './auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // 네비게이션 기능
@@ -9,14 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('href').substring(1);
-            console.log('Clicked link:', targetId); // 추가된 로그
+            console.log('Clicked link:', targetId);
             sections.forEach(section => {
                 section.classList.remove('active');
-                console.log('Removed active from:', section.id); // 추가된 로그
+                console.log('Removed active from:', section.id);
             });
             const targetSection = document.getElementById(targetId);
             targetSection.classList.add('active');
-            console.log('Added active to:', targetId); // 추가된 로그
+            console.log('Added active to:', targetId);
         });
     });
 
@@ -29,18 +29,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        console.log('로그인 시도:', email, password); // 로그인 시도 정보 로그
+        console.log('로그인 시도:', email, password);
 
         try {
             await loginUser(email, password); 
             alert('로그인 성공!');
             window.location.href = 'index.html'; // 로그인 성공 시 index.html로 이동
         } catch (error) {
-            alert('로그인 실패: ' + error.message); // 로그인 실패 시 에러 메시지 알림
+            alert('로그인 실패: ' + error.message);
         }
     });
 
-    // Google Maps 초기화 (API 키가 필요합니다)
+    // Google 로그인 버튼 클릭 이벤트 처리
+    const googleLoginButton = document.getElementById('google-login');
+    googleLoginButton.addEventListener('click', async () => {
+        try {
+            await googleLogin();
+            alert('Google 로그인 성공!');
+            window.location.href = 'index.html'; // Google 로그인 성공 시 index.html로 이동
+        } catch (error) {
+            alert('Google 로그인 실패: ' + error.message);
+        }
+    });
+
+    // Google Maps 초기화 (API 키가 필요함)
     let map;
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -91,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 날씨 정보 기능 (API 키가 필요합니다)
+    // 날씨 정보 기능 (API 키가 필요함)
     const getWeatherBtn = document.getElementById('getWeather');
     const weatherInfo = document.getElementById('weatherInfo');
 
