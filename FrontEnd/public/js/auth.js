@@ -1,7 +1,8 @@
 // auth.js (인증 관련 로직)
 import { auth, database } from './firebase-config.js';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { ref, set, get, child } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-auth.js";
+import { ref, set, get, child } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-database.js";
+import { signOut } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-auth.js";
 
 // Google Auth Provider 초기화
 const provider = new GoogleAuthProvider();
@@ -66,3 +67,36 @@ export const googleLogin = async () => {
     }
 };
 
+export const initAuthStateListener = () => {
+    auth.onAuthStateChanged((user) => {
+        const authButtons = document.getElementById('auth-buttons');
+        const userInfo = document.getElementById('user-info');
+        const logoutBtn = document.getElementById('logout-btn');
+        
+        if (user) {
+            // 로그인 상태
+            authButtons.style.display = 'none';
+            userInfo.style.display = 'inline';
+            logoutBtn.style.display = 'inline';
+            userInfo.textContent = `${user.email}님 환영합니다!`;
+        } else {
+            // 로그아웃 상태
+            authButtons.style.display = 'block';
+            userInfo.style.display = 'none';
+            logoutBtn.style.display = 'none';
+        }
+    });
+};
+
+
+// 로그아웃 함수 추가
+export const logout = async () => {
+    try {
+        await signOut(auth);
+        console.log('로그아웃 성공');
+        window.location.href = 'index.html';
+    } catch (err) {
+        console.error('로그아웃 실패:', err.message);
+        alert('로그아웃 실패: ' + err.message);
+    }
+};

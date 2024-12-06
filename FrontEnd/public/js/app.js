@@ -1,6 +1,7 @@
 //메인 로직 담당 app.js 파일
 import { loginEmail, signupEmail,loginGoogle } from './firebase-config.js';
 const buttons = document.getElementById('buttons');
+import { logout } from './js/auth.js';
 
 //Email 로그인, 회원가입 구현
 buttons.addEventListener('click', (e) => {
@@ -54,3 +55,5 @@ buttons.addEventListener('click', (e) => {
           }
       });
   });
+
+  document.getElementById('logout-btn').addEventListener('click', logout);

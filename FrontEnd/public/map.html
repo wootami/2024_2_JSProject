@@ -9,8 +9,12 @@
         <div class="container">
             <h1><a href="index.html">여행 플래너</a></h1>
             <div>
-                <a href="login.html">로그인</a>
-                <a href="signup.html">회원가입</a>
+                <span id="user-info" style="display: none; color: white;"></span>
+                <button id="logout-btn" style="display: none;">로그아웃</button>
+                <div id="auth-buttons">
+                    <a href="login.html">로그인</a>
+                    <a href="signup.html">회원가입</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -195,6 +199,13 @@
         const hue = (index * 137.5) % 360;
         return `hsl(${hue}, 70%, 50%)`;
     }
+    </script>
+
+    <script type="module">
+        import { initAuthStateListener } from './js/auth.js';
+        document.addEventListener('DOMContentLoaded', initAuthStateListener);
+        import { logout } from './js/auth.js';
+        document.getElementById('logout-btn').addEventListener('click', logout);
     </script>
 </body>
 </html>s
