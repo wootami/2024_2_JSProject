@@ -38,7 +38,7 @@ export const loginUser = async (email, password) => {
     try {
         await signInWithEmailAndPassword(auth, email, password);
         console.log('로그인 성공');
-        window.location.replace('dashboard.html'); // 로그인 성공 시 대시보드로 이동 
+        window.location.replace('index.html'); // 로그인 성공 시 대시보드로 이동 
     } catch (err) {
         console.error('로그인 실패:', err.message);
         alert('로그인 실패: ' + err.message);

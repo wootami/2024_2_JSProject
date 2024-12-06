@@ -1,7 +1,6 @@
 import { loginUser } from './auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-
     // 네비게이션 기능
     const navLinks = document.querySelectorAll('nav a');
     const sections = document.querySelectorAll('main section');
@@ -23,15 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 로그인 기능
     const loginForm = document.getElementById('loginForm');
-    loginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        console.log('로그인 시도:', email, password);
-        
-
-    document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('loginForm');
 
     // 로그인 폼 제출 이벤트 처리
     loginForm.addEventListener('submit', async (e) => {
@@ -39,18 +29,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
+        console.log('로그인 시도:', email, password); // 로그인 시도 정보 로그
+
         try {
             await loginUser(email, password); 
             alert('로그인 성공!');
-            window.location.href = 'index.html'; 
+            window.location.href = 'index.html'; // 로그인 성공 시 index.html로 이동
         } catch (error) {
-            alert('로그인 실패: ' + error.message); 
+            alert('로그인 실패: ' + error.message); // 로그인 실패 시 에러 메시지 알림
         }
     });
-});
 
-    });
-    AIzaSyDpZO8RI3dGyimBugK9D5DG59jzUSTdbgM
     // Google Maps 초기화 (API 키가 필요합니다)
     let map;
     function initMap() {
