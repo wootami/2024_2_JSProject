@@ -6,9 +6,9 @@ import { getDatabase } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-
 const firebaseConfig = {
   apiKey: "AIzaSyBdTMSJuAXluGdrQk6aAxPTszRme0YbKfA",
   authDomain: "jsproject-e6692.firebaseapp.com",
-  //firebase 데이터 베이스
+  databaseURL: "https://jsproject-e6692-default-rtdb.firebaseio.com",
   projectId: "jsproject-e6692",
-  storageBucket: "jsproject-e6692.appspot.com", 
+  storageBucket: "jsproject-e6692.firebasestorage.app", 
   appId: "1:847960636309:web:06e0cdc6327acbcf66949c",
   measurementId: "G-DK3XLS078M"
 };
