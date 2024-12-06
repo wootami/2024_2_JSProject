@@ -16,30 +16,34 @@
         "destination": "/signup.html"
       },
       {
-        "source": "/dashboard",
-        "destination": "/dashboard.html"
-      },
-      {
         "source": "/map",
         "destination": "/map.html"
+      },
+      {
+        "source": "/domestic",
+        "destination": "/domestic.html"
+      },
+      {
+        "source": "/international",
+        "destination": "/international.html"
       },
       {
         "source": "**",
         "destination": "/index.html"
       }
     ],
-    "cleanUrls": true,
-    "trailingSlash": false,
     "headers": [
       {
-        "source": "**/*.@(html|css|js)",
+        "source": "**/*.@(html|css|js|jpg|png|svg)",
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "max-age=3600"
+            "value": "public, max-age=31536000"
           }
         ]
       }
-    ]
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false
   }
 }
