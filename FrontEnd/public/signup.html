@@ -35,22 +35,18 @@
         </div>
     </div>
 
-    <script type="module" src="../src/js/firebase-config.js"></script>
     <script type="module">
         import { signupEmail } from '../src/js/firebase-config.js';
-
         document.getElementById('signup-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('signup-name').value;
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
             const passwordConfirm = document.getElementById('signup-password-confirm').value;
-
             if (password !== passwordConfirm) {
                 alert('비밀번호가 일치하지 않습니다.');
                 return;
             }
-
             try {
                 await signupEmail(email, password);
                 alert('회원가입에 성공했습니다!');

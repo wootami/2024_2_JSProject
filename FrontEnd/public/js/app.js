@@ -29,6 +29,7 @@ buttons.addEventListener('click', (e) => {
       loginSuccess(user.email, user.uid);
     });
   });
+  
   //로그인 성공시 UI 변경
   const loginSuccess = (email, uid) => {
     const login_area = document.getElementById('login-area');

@@ -36,24 +36,27 @@
     
 
     <script> //지도 
+        // 1. 구글 지도 관련 기능
         let map;
         let marker;
-        const weatherApiKey = '16aad813955d45a4b5073622240312';
-        
+
         function initMap() {
+            // 구글 지도 초기화 및 기본 설정
             map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 37.5665, lng: 126.9780 },
-                zoom: 12
+                center: { lat: 35.165464, lng: 128.096933 },  // 연암공대 위치로 초기 중심점 설정
+                zoom: 15  // 초기 줌 레벨
             });
             
+            // 기본 마커 생성
             marker = new google.maps.Marker({
                 map: map
             });
 
+            // 날짜 선택 제한 설정 (오늘부터 16일 후까지만 선택 가능)
             const datePicker = document.getElementById('date-picker');
             const today = new Date();
             const maxDate = new Date();
-            maxDate.setDate(today.getDate() + 14);
+            maxDate.setDate(today.getDate() + 16);
             
             datePicker.min = today.toISOString().split('T')[0];
             datePicker.max = maxDate.toISOString().split('T')[0];
@@ -61,6 +64,7 @@
         }
 
         function searchPlace() {
+            // 주소 검색 및 지도에 표시
             const geocoder = new google.maps.Geocoder();
             const address = document.getElementById('place-input').value;
             const selectedDate = document.getElementById('date-picker').value;
@@ -74,8 +78,14 @@
                 }
             });
         }
+    </script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBH-iJrPVrJXu0MW_qEw74wxxEPHikLhDs&callback=initMap"></script>
+    <script>
+        // 2. 날씨 API 관련 기능
+        const weatherApiKey = '16aad813955d45a4b5073622240312';
 
         async function getForecast(lat, lon, date) {
+            // 위치 기반 날씨 정보 조회
             try {
                 const response = await fetch(
                     `https://api.weatherapi.com/v1/forecast.json?key=${weatherApiKey}&q=${lat},${lon}&days=14&dt=${date}`
@@ -83,6 +93,7 @@
                 const data = await response.json();
                 const forecast = data.forecast.forecastday.find(day => day.date === date);
                 
+                // 날씨 정보 화면에 표시
                 document.getElementById('weather-info').innerHTML = `
                     <h3>${date} 날씨 예보</h3>
                     <div class="forecast-day">
@@ -101,6 +112,7 @@
         }
 
         function getHourlyForecast(hourlyData) {
+            // 3시간 간격으로 시간별 날씨 정보 표시
             return `
                 <div class="hourly-forecast">
                     ${hourlyData
@@ -113,98 +125,108 @@
                 </div>
             `;
         }
-    </script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBH-iJrPVrJXu0MW_qEw74wxxEPHikLhDs&callback=initMap"></script>
-    
-    <script> //장소 추가 스크립트
-    let markers = []; // 마커들을 저장할 배열
-    let colorMap = new Map(); // 날짜별 색상을 저장할 Map
-    let colorIndex = 0; // 색상 인덱스
-    let savedPlacesList = []; // 저장된 장소들의 배열
 
-    function addPlace() {
-        const placeInput = document.getElementById('place-input');
-        const dateInput = document.getElementById('date-picker');
-        const weatherInfo = document.getElementById('weather-info');
-        
-        const place = placeInput.value;
-        const date = dateInput.value;
-        
-        if (place && weatherInfo.innerHTML) {
-            if (!colorMap.has(date)) {
-                colorMap.set(date, getNextColor(colorIndex++));
+        // 3. 장소 저장 관련 기능
+        let markers = [];  // 지도에 표시된 마커들을 저장하는 배열
+        let colorMap = new Map();  // 날짜별 색상을 저장하는 Map
+        let colorIndex = 0;  // 색상 순번
+        let savedPlacesList = [];  // 저장된 장소 정보를 담는 배열
+
+        function addPlace() {
+            // 새로운 장소 추가
+            const placeInput = document.getElementById('place-input');
+            const dateInput = document.getElementById('date-picker');
+            const weatherInfo = document.getElementById('weather-info');
+            
+            const place = placeInput.value;
+            const date = dateInput.value;
+            
+            if (place && weatherInfo.innerHTML) {
+                // 날짜별 고유 색상 할당
+                if (!colorMap.has(date)) {
+                    colorMap.set(date, getNextColor(colorIndex++));
+                }
+                const markerColor = colorMap.get(date);
+                
+                // 컬러 마커 생성
+                const newMarker = new google.maps.Marker({
+                    position: marker.getPosition(),
+                    map: map,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        fillColor: markerColor,
+                        fillOpacity: 0.8,
+                        strokeWeight: 2,
+                        scale: 10
+                    }
+                });
+                
+                markers.push(newMarker);
+                
+                // 장소 정보 저장 및 리스트 업데이트
+                const maxTemp = weatherInfo.querySelector('.forecast-day p:nth-child(1)').textContent;
+                const minTemp = weatherInfo.querySelector('.forecast-day p:nth-child(2)').textContent;
+                
+                const placeInfo = {
+                    name: place,
+                    date: date,
+                    color: markerColor,
+                    maxTemp: maxTemp,
+                    minTemp: minTemp,
+                    location: {
+                        lat: marker.getPosition().lat(),
+                        lng: marker.getPosition().lng()
+                    }
+                };
+                
+                savedPlacesList.push(placeInfo);
+                savedPlacesList.sort((a, b) => new Date(a.date) - new Date(b.date));
+                updatePlacesList();
             }
-            const markerColor = colorMap.get(date);
+        }
+
+        function updatePlacesList() {
+            const savedPlaces = document.getElementById('saved-places');
+            savedPlaces.innerHTML = '';
             
-            const newMarker = new google.maps.Marker({
-                position: marker.getPosition(),
-                map: map,
-                icon: {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    fillColor: markerColor,
-                    fillOpacity: 0.8,
-                    strokeWeight: 2,
-                    scale: 10
-                }
+            savedPlacesList.forEach((place, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div style="border-left: 4px solid ${place.color}; padding-left: 10px;">
+                        <strong>${place.name}</strong><br>
+                        날짜: ${place.date}<br>
+                        ${place.maxTemp}<br>
+                        ${place.minTemp}
+                        <button onclick="deletePlace(${index})" class="delete-btn">삭제</button>
+                    </div>
+                `;
+                savedPlaces.appendChild(li);
             });
+        }
+
+        function deletePlace(index) {
+            // 마커 제거
+            if (markers[index]) {
+                markers[index].setMap(null);
+                markers.splice(index, 1);
+            }
             
-            markers.push(newMarker);
+            // 저장된 장소 목록에서 제거
+            savedPlacesList.splice(index, 1);
             
-            const maxTemp = weatherInfo.querySelector('.forecast-day p:nth-child(1)').textContent;
-            const minTemp = weatherInfo.querySelector('.forecast-day p:nth-child(2)').textContent;
-            
-            // 장소 정보 객체 생성
-            const placeInfo = {
-                name: place,
-                date: date,
-                color: markerColor,
-                maxTemp: maxTemp,
-                minTemp: minTemp,
-                location: {
-                    lat: marker.getPosition().lat(),
-                    lng: marker.getPosition().lng()
-                }
-            };
-            
-            // 로컬 배열에 추가
-            savedPlacesList.push(placeInfo);
-            
-            // 날짜순으로 정렬
-            savedPlacesList.sort((a, b) => new Date(a.date) - new Date(b.date));
-            
-            // 리스트 업데이트
+            // 목록 업데이트
             updatePlacesList();
         }
-    }
 
-    function updatePlacesList() {
-        const savedPlaces = document.getElementById('saved-places');
-        savedPlaces.innerHTML = '';
-        
-        savedPlacesList.forEach(place => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <div style="border-left: 4px solid ${place.color}; padding-left: 10px;">
-                    <strong>${place.name}</strong><br>
-                    날짜: ${place.date}<br>
-                    ${place.maxTemp}<br>
-                    ${place.minTemp}
-                </div>
-            `;
-            savedPlaces.appendChild(li);
-        });
-    }
+        function getNextColor(index) {
+            // 고유한 색상 생성 (황금각을 이용한 색상 분배)
+            const hue = (index * 137.5) % 360;
+            return `hsl(${hue}, 70%, 50%)`;
+        }
 
-    function getNextColor(index) {
-        const hue = (index * 137.5) % 360;
-        return `hsl(${hue}, 70%, 50%)`;
-    }
-    </script>
-
-    <script type="module">
-        import { initAuthStateListener } from './js/auth.js';
+        // 4. 인증 관련 기능
+        // Firebase 인증 상태 리스너 초기화 및 로그아웃 기능
         document.addEventListener('DOMContentLoaded', initAuthStateListener);
-        import { logout } from './js/auth.js';
         document.getElementById('logout-btn').addEventListener('click', logout);
     </script>
 </body>
