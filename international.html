@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>해외 여행 추천</title>
+    <style>
+body {
+font-family: 'Arial', sans-serif;
+margin: 0;
+padding: 0;
+color: black;
+}
+
+header {
+    background-color: rgba(0, 0, 0, 0.7); 
+    color: white;
+    padding: 20px 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+
+header h1 {
+    flex-grow: 1;
+    text-align: center; 
+    margin: 0;
+    font-size: 24px; 
+    font-weight: bold;
+    letter-spacing: 1px; 
+}
+
+
+.container {
+    padding: 120px 20px; 
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); 
+}
+
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    width: 100%;
+    align-items: center;
+}
+
+
+.option {
+    background: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+
+
+.option:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+button {
+    background: linear-gradient(to right, green, green); 
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px; 
+    cursor: auto;
+}
+.region-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.destination {
+    background: white;
+    padding: 15px;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 200px;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>해외 여행 추천</h1>
+    </header>
+    <div class="container">
+        <h2>원하는 대륙을 선택하세요</h2>
+        <div class="region-group top">
+            <div class="destination">
+                <h3>아시아</h3>
+                <button onclick="alert('아시아 추천 여행지 정보 표시 (API 연동 예정)')">추천받기</button>
+            </div>
+            <div class="destination">
+                <h3>유럽</h3>
+                <button onclick="alert('유럽 추천 여행지 정보 표시 (API 연동 예정)')">추천받기</button>
+            </div>
+            <div class="destination">
+                <h3>아프리카</h3>
+                <button onclick="alert('아프리카 추천 여행지 정보 표시 (API 연동 예정)')">추천받기</button>
+            </div>
+        </div>
+        <div class="region-group bottom">
+            <div class="destination">
+                <h3>아메리카</h3>
+                <button onclick="alert('아메리카 추천 여행지 정보 표시 (API 연동 예정)')">추천받기</button>
+            </div>
+            <div class="destination">
+                <h3>러시아</h3>
+                <button onclick="alert('러시아 추천 여행지 정보 표시 (API 연동 예정)')">추천받기</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
