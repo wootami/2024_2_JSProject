@@ -89,7 +89,7 @@ export const initAuthStateListener = () => {
 };
 
 
-// 로그아웃 함수 추가
+// 로그아웃 함수
 export const logout = async () => {
     try {
         await signOut(auth);
