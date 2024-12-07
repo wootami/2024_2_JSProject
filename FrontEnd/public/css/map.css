@@ -100,10 +100,6 @@ button {
     transition: background-color 0.3s;
 }
 
-#logout-btn{
-    width: 30%;
-}
-
 button:hover {
     background-color: #45a049;
 }
