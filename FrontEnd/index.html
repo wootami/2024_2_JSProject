@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: black;
+}
+
+header {
+    background-color: rgba(0, 0, 0, 0.7); 
+    color: white;
+    padding: 20px 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+
+header h1 {
+    flex-grow: 1;
+    text-align: center; 
+    margin: 0;
+    font-size: 24px; 
+    font-weight: bold;
+    letter-spacing: 1px; 
+}
+
+
+.container {
+    padding: 120px 20px; 
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); 
+}
+
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    width: 100%;
+    align-items: center;
+}
+
+
+.option {
+    background: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+
+
+.option:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+button {
+    background: linear-gradient(to right, green, green); 
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px; 
+    cursor: pointer;
+}
+.region-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.destination {
+    background: white;
+    padding: 15px;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 200px;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="auth-buttons">
+            <button onclick="location.href='login.html'">로그인</button>
+            <button onclick="location.href='signup.html'">회원가입</button>
+        </div>
+    </header>
+    <div class="container">
+        <h2>여행지를 선택하세요</h2>
+        <div class="options">
+            <div class="option">
+                <h3>국내 여행</h3>
+                <button onclick="location.href='domestic.html'">국내 여행</button>
+            </div>
+            <div class="option">
+                <h3>해외 여행</h3>
+                <button onclick="location.href='international.html'">해외 여행</button>
+            </div>
+        </div>
+        <div class="calendar-section">
+            <h3>여행 날짜를 선택하세요</h3>
+            <form>
+                <label for="departure-date">출발 날짜:</label>
+                <input type="date" id="departure-date" name="departure-date" required>
+
+                <label for="return-date">도착 날짜:</label>
+                <input type="date" id="return-date" name="return-date" required>
+            </form>
+        </div>
+    </div>
+
+    <script src="slider.js"></script> 
+    <script>
+        const departureDate = document.getElementById('departure-date');
+        const returnDate = document.getElementById('return-date');
+
+        const today = new Date().toISOString().split('T')[0];
+        departureDate.setAttribute('min', today);
+
+        departureDate.addEventListener('change', () => {
+            returnDate.setAttribute('min', departureDate.value);
+        });
+    </script>
+</body>
+</html>
