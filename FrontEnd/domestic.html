@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>국내 여행 추천</title>
     <style>
-body {
+ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
@@ -105,46 +106,44 @@ button {
 </head>
 <body>
     <header>
-        <div class="auth-buttons">
-            <button onclick="location.href='login.html'">로그인</button>
-            <button onclick="location.href='signup.html'">회원가입</button>
-        </div>
+        <h1>국내 여행 추천</h1>
     </header>
     <div class="container">
-        <h2>여행지를 선택하세요</h2>
-        <div class="options">
-            <div class="option">
-                <h3>국내 여행</h3>
-                <button onclick="location.href='domestic.html'">국내 여행</button>
+        <h2>원하는 지역을 선택하세요</h2>
+        <div class="region-group top">
+            <div class="destination">
+                <h3>제주도</h3>
+                <button onclick="alert('제주도 추천 여행지 정보 표시 (API 연동 예정)')">추천받기</button>
             </div>
-            <div class="option">
-                <h3>해외 여행</h3>
-                <button onclick="location.href='international.html'">해외 여행</button>
+            <div class="destination">
+                <h3>서울</h3>
+                <button onclick="alert('서울 추천 여행지 정보 표시 (API 연동 예정)')">추천받기</button>
+            </div>
+            <div class="destination">
+                <h3>경기도</h3>
+                <button onclick="alert('경기도 추천 여행지 정보 표시 (API 연동 예정)')">추천받기</button>
             </div>
         </div>
-        <div class="calendar-section">
-            <h3>여행 날짜를 선택하세요</h3>
-            <form>
-                <label for="departure-date">출발 날짜:</label>
-                <input type="date" id="departure-date" name="departure-date" required>
-
-                <label for="return-date">도착 날짜:</label>
-                <input type="date" id="return-date" name="return-date" required>
-            </form>
+        <div class="region-group middle">
+            <div class="destination">
+                <h3>충청북도</h3>
+                <button onclick="alert('충청북도 추천 여행지 정보 표시 (API 연동 예정)')">추천받기</button>
+            </div>
+            <div class="destination">
+                <h3>전라남도</h3>
+                <button onclick="alert('전라남도 추천 여행지 정보 표시 (API 연동 예정)')">추천받기</button>
+            </div>
+            <div class="destination">
+                <h3>경상남도</h3>
+                <button onclick="alert('경상남도 추천 여행지 정보 표시 (API 연동 예정)')">추천받기</button>
+            </div>
+        </div>
+        <div class="region-group bottom">
+            <div class="destination">
+                <h3>강원도</h3>
+                <button onclick="alert('강원도 추천 여행지 정보 표시 (API 연동 예정)')">추천받기</button>
+            </div>
         </div>
     </div>
-
-    <script src="slider.js"></script> 
-    <script>
-        const departureDate = document.getElementById('departure-date');
-        const returnDate = document.getElementById('return-date');
-
-        const today = new Date().toISOString().split('T')[0];
-        departureDate.setAttribute('min', today);
-
-        departureDate.addEventListener('change', () => {
-            returnDate.setAttribute('min', departureDate.value);
-        });
-    </script>
 </body>
 </html>
